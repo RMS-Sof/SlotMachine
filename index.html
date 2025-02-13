@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine Game</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .slot-container { display: flex; justify-content: center; margin: 20px; }
+        .slot { 
+            width: 100px; 
+            height: 100px; 
+            margin: 10px;
+            border: 3px solid black; 
+            border-radius: 10px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: lightgray;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        #result { font-weight: bold; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Slot Machine Game</h1>
+    <div class="slot-container">
+        <div class="slot" id="slot1">💲</div>
+        <div class="slot" id="slot2">💲</div>
+        <div class="slot" id="slot3">💲</div>
+    </div>
+    <button onclick="startSlots()">Start</button>
+    <p id="result"></p>
+    
+    <script>
+        const symbols = ["💲", "€", "£", "¥", "₹", "₿"];
+        let interval1, interval2, interval3;
+        
+        function getRandomSymbol() {
+            return symbols[Math.floor(Math.random() * symbols.length)];
+        }
+        
+        function startSlots() {
+            document.getElementById("result").textContent = "Spinning...";
+            interval1 = setInterval(() => {
+                document.getElementById("slot1").textContent = getRandomSymbol();
+            }, 200);
+            interval2 = setInterval(() => {
+                document.getElementById("slot2").textContent = getRandomSymbol();
+            }, 200);
+            interval3 = setInterval(() => {
+                document.getElementById("slot3").textContent = getRandomSymbol();
+            }, 200);
+            
+            setTimeout(() => {
+                clearInterval(interval1);
+                clearInterval(interval2);
+                clearInterval(interval3);
+                checkResult();
+            }, 4000); // Stops after 4 seconds
+        }
+        
+        function checkResult() {
+            let sym1 = document.getElementById("slot1").textContent;
+            let sym2 = document.getElementById("slot2").textContent;
+            let sym3 = document.getElementById("slot3").textContent;
+            
+            if (sym1 === sym2 && sym2 === sym3) {
+                document.getElementById("result").textContent = "Congratulations! You won!";
+            } else {
+                document.getElementById("result").textContent = "Try again!";
+            }
+        }
+    </script>
+</body>
+</html>
